@@ -10,7 +10,6 @@ const WhatWeDo = () => {
       gradient: "from-purple-600 to-purple-800",
       bgColor: "bg-gradient-to-br from-purple-50 to-purple-100",
       iconBg: "bg-gradient-to-br from-purple-500 to-purple-700",
-      hoverGlow: "group-hover:shadow-purple-500/50",
       stats: [
         { icon: TrendingUp, label: "Investment Growth", value: "15%+" },
         { icon: Users, label: "Active Members", value: "5,000+" }
@@ -23,7 +22,6 @@ const WhatWeDo = () => {
       gradient: "from-orange-600 to-red-600",
       bgColor: "bg-gradient-to-br from-orange-50 to-orange-100",
       iconBg: "bg-gradient-to-br from-[#F15A29] to-[#d94c1e]",
-      hoverGlow: "group-hover:shadow-orange-500/50",
       stats: [
         { icon: Shield, label: "Recent Wins", value: "Q1 2026" },
         { icon: Users, label: "Teachers", value: "5,000+" }
@@ -36,7 +34,6 @@ const WhatWeDo = () => {
       gradient: "from-blue-800 to-blue-950",
       bgColor: "bg-gradient-to-br from-blue-50 to-blue-100",
       iconBg: "bg-gradient-to-br from-[#172E70] to-[#0f1d47]",
-      hoverGlow: "group-hover:shadow-blue-500/50",
       stats: [
         { icon: Shield, label: "Legal Cases", value: "200+" },
         { icon: Users, label: "Success Rate", value: "95%" }
@@ -67,12 +64,6 @@ const WhatWeDo = () => {
 
   return (
     <section className="py-24 bg-gradient-to-b from-white via-gray-50 to-white relative overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse [animation-delay:1s]"></div>
-      </div>
-
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -108,12 +99,9 @@ const WhatWeDo = () => {
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
               className="group relative"
             >
-              {/* Card Background with Gradient Border Effect */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl ${feature.hoverGlow}`}></div>
-              
               <div className={`relative ${feature.bgColor} rounded-3xl p-8 h-full backdrop-blur-sm border border-white shadow-xl transition-all duration-500 group-hover:shadow-2xl overflow-hidden`}>
                 {/* Decorative Corner Element */}
-                <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br ${feature.gradient} rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-500`}></div>
+                {/* <div className={`absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br ${feature.gradient} rounded-full opacity-10 group-hover:opacity-20 transition-opacity duration-500`}></div> */}
                 
                 {/* Icon Container */}
                 <div className="relative mb-6">

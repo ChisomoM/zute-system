@@ -1,4 +1,4 @@
-import { ArrowRight, Shield, TrendingUp, Users, Award } from 'lucide-react';
+import { ArrowRight, Shield, TrendingUp,  Award } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -109,7 +109,7 @@ export default function Hero(){
                             <Link to="/join" className="group">
                                 <Button 
                                     size="sm"
-                                    className="w-full sm:w-auto bg-gradient-to-r from-[#F15A29] to-[#d94c1e] hover:from-[#d94c1e] hover:to-[#c4431a] text-white font-bold px-10 py-7 text-lg rounded-full shadow-lg hover:shadow-orange-500/50 transition-all duration-300"
+                                    className="w-full sm:w-auto bg-gradient-to-r from-[#F15A29] to-[#d94c1e] hover:from-[#d94c1e] hover:to-[#c4431a] text-white font-bold px-10 py-7 text-lg rounded-2xl shadow-lg hover:shadow-orange-500/50 transition-all duration-300"
                                 >
                                     Become a Member
                                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -118,7 +118,7 @@ export default function Hero(){
                             <Button 
                                 variant="outline" 
                                 size="sm"
-                                className="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-[#172E70] font-semibold px-10 py-7 text-lg rounded-full transition-all duration-300 bg-transparent backdrop-blur-sm"
+                                className="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-[#172E70] font-semibold px-10 py-7 text-lg rounded-2xl transition-all duration-300 bg-transparent backdrop-blur-sm"
                             >
                                 Contact Us
                             </Button>

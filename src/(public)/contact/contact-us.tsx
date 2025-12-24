@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import PageHero from '@/components/PageHero';
 import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Loader2, CheckCircle2, Phone, Mail, MapPin } from 'lucide-react';
@@ -66,12 +65,51 @@ function Contact() {
         keywords="contact ZUTE, teacher union Zambia, education support, join ZUTE"
         url="https://zute.org.zm/contact"
       />
-      {/* Hero Section with Background */}
-     <PageHero 
-       title='Contact'
-       highlightText='Us'
-       backgroundImage='/4dd7ba40-e8da-4ca4-b65e-1c2f0d4de0a3.jpg'
-     />
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-[#172E70] via-[#1a3580] to-[#172E70] py-16 sm:py-20 md:py-24 overflow-hidden">
+        {/* Decorative background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '60px 60px'
+          }}></div>
+        </div>
+
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+          <div className="text-center space-y-4">
+            {/* Small label */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="text-sm md:text-base font-semibold text-[#F15A29] tracking-widest uppercase">
+                Get in Touch
+              </span>
+            </motion.div>
+
+            {/* Main heading */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.6 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight font-inter"
+            >
+              Contact <span className="text-[#F15A29]">Us</span>
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.6 }}
+              className="text-base sm:text-lg md:text-xl text-blue-100/90 max-w-2xl mx-auto leading-relaxed font-light"
+            >
+              Have a question or need support? We're here to help you.
+            </motion.p>
+          </div>
+        </div>
+      </section>
 
       {/* Contact Section */}
       <div className="py-16 bg-white">

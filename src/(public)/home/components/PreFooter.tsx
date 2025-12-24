@@ -33,20 +33,22 @@ const PreFooter = () => {
         
         {/* Header Section */}
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <motion.span 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-[#F15A29] font-semibold tracking-wider text-sm uppercase mb-4 block"
+            className="inline-block mb-4"
           >
-            Why Choose ZUTE
-          </motion.span>
+            <span className="text-[#F15A29] font-semibold text-sm uppercase tracking-wider px-4 py-2 bg-orange-50 rounded-full border border-orange-200">
+              Why Choose ZUTE
+            </span>
+          </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-inter bg-clip-text text-transparent bg-gradient-to-r from-[#172E70] to-[#F15A29]"
           >
             The Professional Standard for Educators
           </motion.h2>
@@ -99,11 +101,11 @@ const PreFooter = () => {
 
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="text-center lg:text-left max-w-xl">
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                Ready to elevate your career?
+              <h3 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[#F15A29] via-orange-400 to-[#F15A29]">
+                Join the Movement for Teacher Empowerment
               </h3>
               <p className="text-blue-100 text-lg">
-                Join thousands of Zambian educators who trust ZUTE for their professional representation.
+                Be part of a union that fights for your rights, protects your future, and builds your wealth.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">

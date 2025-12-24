@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+// import type { hr } from "date-fns/locale";
 
 export default function Navbar(){
     const [isOpen, setIsOpen] = useState(false);
@@ -47,7 +48,7 @@ export default function Navbar(){
     };
 
     const navigate = useNavigate();
-    const onGetStarted = () => navigate("/login")
+    // const onGetStarted = () => navigate("/login")
 
     return (
         <motion.header 
@@ -88,9 +89,9 @@ export default function Navbar(){
                     </nav>
 
                     <Button 
-                    onClick={onGetStarted}
+                    onClick= {() => navigate('/join')}
                     className="ml-4 bg-gradient-to-r from-gradient-from to-gradient-to px-auto text-white">
-                            Get Started
+                            Join ZUTE
                         </Button>
 
                     {/* Mobile menu button */}

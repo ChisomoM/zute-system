@@ -54,10 +54,10 @@ const coreValues = [
 
 const leadershipTeam = [
   {
-    name: 'Dr. Jane Mwansa',
+    name: 'Mr. Gracious Mutale',
     title: 'National President',
     image: '',
-    bio: 'Dr. Mwansa has over 20 years of experience in educational leadership...'
+    bio: 'Mr. Mutale has over 20 years of experience in educational leadership...'
   },
   {
     name: 'Mr. Peter Lungu',
@@ -152,36 +152,47 @@ export default function AboutPage() {
       <Navbar />
 
       {/* --- Hero Section --- */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        {/* Parallax Background */}
-        <motion.div 
-          style={{ y }}
-          className="absolute inset-0 z-0"
-        >
-          <div className="absolute inset-0 bg-[url('/ZUTE-IMAGE.jpg')] bg-cover bg-center" />
-          <div className="absolute inset-0 bg-[#172E70]/90" />
-        </motion.div>
+      <section className="relative bg-gradient-to-br from-[#172E70] via-[#1a3580] to-[#172E70] py-16 sm:py-20 md:py-24 overflow-hidden">
+        {/* Decorative background pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '60px 60px'
+          }}></div>
+        </div>
 
-        <div className="container mx-auto px-4 relative z-10 pt-20 text-center">
-          <div className="max-w-4xl mx-auto">
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+          <div className="text-center space-y-4">
+            {/* Small label */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.6 }}
             >
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white font-inter mb-6">
-                Empowerment <span className="text-[#F15A29]">Our Agenda.</span>
-              </h1>
-              <p className="text-lg md:text-xl text-gray-200 max-w-2xl mx-auto leading-relaxed mb-8">
-                Building a stronger, more dignified future for Zambia's educators through unity, advocacy, and economic independence.
-              </p>
-              
-              <div className="flex flex-wrap justify-center gap-4">
-                <Button size="lg" className="bg-[#F15A29] hover:bg-[#d14012] text-white px-8 py-6 text-lg rounded-full transition-all hover:scale-105 shadow-lg shadow-orange-900/20">
-                  Join the Movement <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-              </div>
+              <span className="text-sm md:text-base font-semibold text-[#F15A29] tracking-widest uppercase">
+                About ZUTE
+              </span>
             </motion.div>
+
+            {/* Main heading */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15, duration: 0.6 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight font-inter"
+            >
+              About <span className="text-[#F15A29]">ZUTE</span>
+            </motion.h1>
+
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.25, duration: 0.6 }}
+              className="text-base sm:text-lg md:text-xl text-blue-100/90 max-w-2xl mx-auto leading-relaxed font-light"
+            >
+              Building a stronger, more dignified future for Zambia's educators through unity, advocacy, and economic independence.
+            </motion.p>
           </div>
         </div>
       </section>
