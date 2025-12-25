@@ -90,12 +90,12 @@ const PreFooter = () => {
           initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="bg-[#172E70] rounded-2xl p-8 md:p-12 relative overflow-hidden"
+          className="bg-[#172E70] rounded-2xl pl-8 pt-8 pb-8 md:p-12 relative overflow-hidden"
         >
             {/* Abstract Pattern */}
-            <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none">
-                <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="80" stroke="white" strokeWidth="20"/>
+            <div className="absolute top-0 right-0 mr-4 pl-12 pt-16 opacity-10 pointer-events-none">
+                <svg width="275" height="275" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="80" stroke="white" strokeWidth="24"/>
                 </svg>
             </div>
 

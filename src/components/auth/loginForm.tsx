@@ -1,6 +1,6 @@
 import { useAuth } from "@/lib/context/useAuth";
 import { Label } from "@radix-ui/react-label";
-import { Eye, EyeClosed, Loader2, Building2 } from "lucide-react";
+import { Eye, EyeClosed, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -13,7 +13,7 @@ interface LoginFormProps {
   onSignUpClick: () => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSignUpClick }) => {
+export const LoginForm: React.FC<LoginFormProps> = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [see, setSee] = useState(false);
@@ -128,16 +128,16 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSignUpClick }) => {
         </form>
 
         {/* Divider */}
-        <div className="relative py-2">
+        {/* <div className="relative py-2">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t border-gray-200" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
             <span className="bg-white px-2 text-gray-500">Don't have an account?</span>
           </div>
-        </div>
+        </div> */}
 
-        {/* Sign Up Section */}
+        {/* Sign Up Section
         <div className="space-y-2">
           <Button
             type="button"
@@ -151,7 +151,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSignUpClick }) => {
           <p className="text-xs text-center text-gray-500 leading-relaxed">
             Complete your registration and get started
           </p>
-        </div>
+        </div> */}
       </div>
 
       {/* Forgot Password Modal */}
