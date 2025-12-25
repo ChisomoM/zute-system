@@ -90,7 +90,7 @@ export default function Navbar(){
 
                     <Button 
                     onClick= {() => navigate('/join')}
-                    className="ml-4 bg-gradient-to-r from-gradient-from to-gradient-to px-auto text-white">
+                    className="ml-4 px-12 rounded-2xl bg-gradient-to-r from-[#F15A29] to-[#d94c1e] hover:from-[#d94c1e] hover:to-[#c4431a] px-auto text-white hover:shadow-orange-500/50 shadow-lg transition-all duration-300">
                             Join ZUTE
                         </Button>
 

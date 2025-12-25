@@ -1,18 +1,19 @@
-# Chizo's React Template
+# Zute System
 
-A modern React template with authentication, routing, admin dashboard, and public-facing pages, built with TypeScript, Vite, and Tailwind CSS.
+A comprehensive React-based system for managing educational or organizational operations, featuring admin dashboards, teacher interfaces, and public-facing pages, built with TypeScript, Vite, and Tailwind CSS.
 
 ## Features
 
-- **Authentication System**: Login/logout with JWT tokens, protected routes based on account types (can be replaced with Firebase Auth)
-- **Admin Dashboard**: Comprehensive admin interface with sidebar navigation, user management, and analytics
-- **Public Pages**: Landing page with hero section, features, API documentation, and contact forms
+- **Authentication System**: Login/logout with Firebase Auth, protected routes based on account types (admin, teacher, public)
+- **Admin Dashboard**: Comprehensive admin interface with sidebar navigation, user management, approvals, region management, reports, and analytics
+- **Teacher Dashboard**: Dedicated interface for teachers to manage affiliates, finances, and personal data
+- **Public Pages**: Landing page, join forms, about, contact, and other public-facing content
 - **SEO Optimization**: Generic SEO component for managing meta tags, Open Graph, and Twitter Cards
 - **Responsive Design**: Mobile-first design using Tailwind CSS and Radix UI components
 - **TypeScript**: Full type safety throughout the application
 - **Modern Tooling**: Vite for fast development, ESLint for code quality, and pnpm for package management
 - **Routing**: Client-side routing with React Router, including nested routes and protected access
-- **Optional Firebase Integration**: Authentication, database (Firestore), and file storage
+- **Firebase Integration**: Authentication, database (Firestore), and file storage
 
 ## Tech Stack
 
@@ -21,10 +22,11 @@ A modern React template with authentication, routing, admin dashboard, and publi
 - **Styling**: Tailwind CSS, Radix UI
 - **Routing**: React Router DOM
 - **State Management**: React Context (for auth)
-- **Backend (Optional)**: Firebase (Auth, Firestore, Storage)
+- **Backend**: Firebase (Auth, Firestore, Storage)
 - **Icons**: Lucide React
 - **Forms**: Custom form components with validation
 - **Notifications**: Sonner for toast notifications
+- **File Handling**: Cloudinary for image uploads, PDF/CSV exports
 
 ## Getting Started
 
@@ -37,8 +39,8 @@ A modern React template with authentication, routing, admin dashboard, and publi
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/ChisomoM/c-react-template.git
-   cd c-react-template
+   git clone https://github.com/ChisomoM/zute-system.git
+   cd zute-system
    ```
 
 2. Install dependencies:
@@ -76,50 +78,89 @@ pnpm lint
 ```
 src/
 ├── (admin)/
-│   └── merchant/
-│       ├── LoginPage.tsx          # Admin login page
-│       └── merchantDashboard.tsx  # Admin dashboard (renamed to AdminDashboard)
+│   └── admin/
+│       ├── Admin.tsx                 # Main admin dashboard
+│       ├── ApprovalsPage.tsx         # Approvals management
+│       ├── JoinApplications.tsx      # Join application reviews
+│       ├── LoginPage.tsx             # Admin login
+│       ├── Referrals.tsx             # Referral management
+│       ├── RegionManagement.tsx      # Region administration
+│       ├── Reports.tsx               # Reports and analytics
+│       ├── TeacherManagement.tsx     # Teacher management
+│       └── TeamManagement.tsx        # Team management
+├── (teacher)/
+│   └── dashboard/
+│       ├── AffiliatesPage.tsx        # Affiliate management
+│       ├── FinancesPage.tsx          # Financial data
+│       └── TeacherDashboard.tsx      # Teacher dashboard
 ├── (public)/
-│   └── home/
-│       ├── home.tsx               # Public home page
-│       └── components/            # Home page components (hero, features, etc.)
+│   ├── about/
+│   │   └── AboutPage.tsx             # About page
+│   ├── contact/
+│   │   └── contact-us.tsx            # Contact page
+│   ├── ecos/
+│   │   └── EcosPage.tsx              # ECOS page
+│   ├── home/
+│   │   ├── home.tsx                  # Public home page
+│   │   └── components/               # Home page components
+│   └── join/
+│       └── JoinPage.tsx              # Join Zute form
 ├── components/
-│   ├── ui/                        # Reusable UI components (buttons, cards, etc.)
-│   ├── auth/                      # Authentication components
-│   ├── footer.tsx                 # Site footer
-│   ├── navbar.tsx                 # Navigation bar
-│   └── ...
+│   ├── ui/                           # Reusable UI components (shadcn/ui)
+│   ├── auth/                         # Authentication components
+│   ├── FileGallery.tsx               # File gallery component
+│   ├── FileUpload.tsx                # File upload component
+│   ├── footer.tsx                    # Site footer
+│   ├── JoinZuteForm.tsx              # Join form component
+│   ├── Login.tsx                     # Login component
+│   ├── navbar.tsx                    # Navigation bar
+│   ├── PageHero.tsx                  # Page hero component
+│   ├── ScrollToTop.tsx               # Scroll to top utility
+│   ├── SEO.tsx                       # SEO component
+│   └── TopNavBar.tsx                 # Top navigation bar
 ├── layouts/
-│   ├── AdminLayout.tsx            # Layout for admin pages
-│   └── MainLayout.tsx             # Layout for public pages
+│   ├── AdminLayout.tsx               # Layout for admin pages
+│   ├── MainLayout.tsx                # Layout for public pages
+│   └── TeacherLayout.tsx             # Layout for teacher pages
 ├── lib/
-│   ├── context/                   # React contexts (auth, etc.)
-│   ├── api/                       # API utilities and endpoints
-│   └── utils.ts                   # Utility functions
+│   ├── api/                          # API utilities and services
+│   ├── auth/                         # Authentication logic
+│   ├── context/                      # React contexts (Auth)
+│   ├── firebase.ts                   # Firebase initialization
+│   ├── permissions.tsx               # Role-based permissions
+│   ├── ProtectedRoute.tsx            # Protected route component
+│   └── utils.ts                      # Utility functions
 ├── types/
-│   └── auth.ts                    # TypeScript type definitions
-└── assets/                        # Static assets (logos, images)
+│   ├── admin.ts                      # Admin-related types
+│   ├── auth.ts                       # Authentication types
+│   └── join-zute.ts                  # Join form types
+└── assets/                           # Static assets (logos, images)
 ```
 
 ## Key Components
 
 ### Authentication
-- **AuthContext**: Manages user authentication state
-- **ProtectedRoute**: Wraps routes that require authentication
+- **AuthContext**: Manages user authentication state with Firebase
+- **ProtectedRoute**: Wraps routes that require authentication and role-based access
 - **LoginForm**: Handles user login with email/password
 
 ### Routing
-- Public routes: `/` (home), `/login`
-- Admin routes: `/admin/dashboard` (protected)
+- Public routes: `/` (home), `/join`, `/about`, `/contact`
+- Admin routes: `/admin/*` (protected, admin role)
+- Teacher routes: `/teacher/*` (protected, teacher role)
 
 ### UI Components
 - Built with Radix UI primitives for accessibility
 - Custom components for forms, navigation, and layouts
 - Responsive design with Tailwind CSS
 
+### Permissions
+- Role-based access control with `permissions.tsx`
+- Supports admin, teacher, and public roles
+
 ### SEO Component
 
-The template includes a generic SEO component for managing meta tags, Open Graph, and Twitter Cards. It's built using `react-helmet-async` for dynamic document head management.
+The application includes a generic SEO component for managing meta tags, Open Graph, and Twitter Cards. It's built using `react-helmet-async` for dynamic document head management.
 
 **Usage:**
 
@@ -136,7 +177,7 @@ function MyPage() {
         image="https://example.com/image.jpg"
         url="https://example.com/page"
         type="website"
-        siteName="Your Site Name"
+        siteName="Zute System"
         twitterCard="summary_large_image"
         canonical="https://example.com/page"
       />
@@ -162,9 +203,9 @@ function MyPage() {
 ## Customization
 
 ### Adding New Pages
-1. Create your component in the appropriate folder (`(public)` or `(admin)`)
-2. Add the route to `App.tsx`
-3. Use `ProtectedRoute` if authentication is required
+1. Create your component in the appropriate folder (`(public)`, `(admin)`, or `(teacher)`)
+2. Add the route to `src/App.tsx`
+3. Use `ProtectedRoute` with appropriate permissions if authentication is required
 
 ### Styling
 - Modify `tailwind.config.js` for custom themes
@@ -172,14 +213,14 @@ function MyPage() {
 - Global styles in `src/index.css`
 
 ### API Integration
-- Update endpoints in `src/lib/api/end_points.tsx`
+- Update services in `src/lib/api/`
 - Modify API calls in `src/lib/api/crud.tsx`
-- Adjust authentication logic in `src/lib/context/auth.tsx`
-- **Optional**: Use Firebase for backend services (see Firebase Integration section)
+- Adjust authentication logic in `src/lib/context/AuthContext.tsx`
+- Use Firebase for backend services (see Firebase Integration section)
 
-## Firebase Integration (Optional)
+## Firebase Integration
 
-This template includes optional Firebase integration for authentication, database, and storage. Firebase is not required and can be easily removed.
+This project uses Firebase for authentication, database, and storage.
 
 ### Setup Firebase
 
@@ -245,16 +286,6 @@ const uploadFile = async (file: File) => {
 };
 ```
 
-### Removing Firebase
-
-To remove Firebase integration:
-
-1. Delete the `src/lib/firebase/` directory
-2. Delete `src/lib/auth/firebaseAuth.ts`
-3. Remove `firebase` from `package.json`
-4. Remove Firebase environment variables from `.env`
-5. Remove any Firebase imports from your components
-
 ## Contributing
 
 1. Fork the repository
@@ -269,6 +300,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-For questions or issues, please open an issue on GitHub or contact the maintainers.
-#   z u t e - s y s t e m  
+For questions or issues, please open an issue on GitHub or contact the maintainers. 
  
