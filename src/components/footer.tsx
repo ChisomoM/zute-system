@@ -1,4 +1,4 @@
-import { Facebook, MessageCircle } from "lucide-react";
+import { Facebook, MessageCircle, Twitter } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -85,21 +85,24 @@ export default function Footer() {
             <div className="flex gap-3 mb-4">
               <a 
                 href="#" 
+                title="Facebook"
                 className="w-11 h-11 bg-white/10 hover:bg-[#F14600] backdrop-blur-sm rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a 
                 href="#" 
+                title="WhatsApp"
                 className="w-11 h-11 bg-white/10 hover:bg-[#F14600] backdrop-blur-sm rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
               >
                 <MessageCircle className="w-5 h-5" />
               </a>
               <a 
                 href="#" 
+                title="Twitter"
                 className="w-11 h-11 bg-white/10 hover:bg-[#F14600] backdrop-blur-sm rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg"
               >
-
+                <Twitter className="w-5 h-5" />
               </a>
             </div>
             <p className="text-white/80 text-sm">

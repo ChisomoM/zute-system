@@ -319,9 +319,9 @@ export const ReportsPage: React.FC = () => {
                   fill="#8b5cf6"
                   radius={[8, 8, 0, 0]}
                   maxBarSize={60}
-                  onClick={(data: { province?: string }) => {
-                    if (data && data.province) {
-                      setSelectedProvince(data.province);
+                  onClick={(data) => {
+                    if (data && data.payload && data.payload.province) {
+                      setSelectedProvince(data.payload.province);
                     }
                   }}
                   style={{ cursor: 'pointer' }}

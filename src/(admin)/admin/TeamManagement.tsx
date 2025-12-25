@@ -35,7 +35,7 @@ import { toast } from 'sonner';
 import { FirebaseFirestore } from '@/lib/firebase/firestore';
 import { createUser } from '@/lib/firebase/admin-utils';
 import type { AdminProfile } from '@/types/admin';
-import { USER_ROLES, type UserRole, ZAMBIAN_DISTRICTS } from '@/lib/constants';
+import { USER_ROLES, type UserRole, ZAMBIAN_DISTRICTS, type District } from '@/lib/constants';
 
 export default function TeamManagement() {
   const [users, setUsers] = useState<AdminProfile[]>([]);
@@ -51,7 +51,7 @@ export default function TeamManagement() {
     email: '',
     password: '',
     role: USER_ROLES.REGIONAL_ADMIN as UserRole,
-    assignedRegions: [] as string[],
+    assignedRegions: [] as District[],
   });
 
   const fetchUsers = async () => {
@@ -111,7 +111,7 @@ export default function TeamManagement() {
     }
   };
 
-  const toggleRegion = (region: string) => {
+  const toggleRegion = (region: District) => {
     setFormData(prev => {
       const current = prev.assignedRegions;
       if (current.includes(region)) {

@@ -1,4 +1,4 @@
-import { initializeApp, getApp, getApps, deleteApp } from 'firebase/app';
+import { initializeApp, getApp, getApps } from 'firebase/app';
 import type { FirebaseApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
@@ -47,6 +47,7 @@ export const createUser = async (
     const mainDb = getFirestore(getApp()); // Get default app's firestore
 
     const adminProfile: AdminProfile = {
+      id: user.uid,
       uid: user.uid,
       email: user.email || email,
       firstName,
@@ -68,6 +69,7 @@ export const createUser = async (
     // await deleteApp(secondaryApp); 
 
     return { success: true, uid: user.uid };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error('Error creating user:', error);
     return { success: false, error: error.message };

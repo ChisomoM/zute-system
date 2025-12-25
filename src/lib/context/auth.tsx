@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ReactNode } from 'react';
 import {
   useState,
@@ -8,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 // import { post } from '../api/crud';
 import { signInWithFirebase } from '../auth/firebaseAuth';
+import type { AdminProfile } from '@/types/admin';
 import { FirebaseFirestore } from '../firebase/firestore';
 import type {
   AuthUser,
@@ -126,8 +128,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             const userDoc = await FirebaseFirestore.getDocument('users', firebaseUser.uid);
             if (userDoc) {
               userProfile = userDoc;
-              role = (userDoc.role as UserRole) || USER_ROLES.TEACHER;
-              permissions = userDoc.permissions || ROLE_PERMISSIONS[role] || [];
+              role = ((userDoc as any).role as UserRole) || USER_ROLES.TEACHER;
+              permissions = (userDoc as any).permissions || ROLE_PERMISSIONS[role] || [];
             }
           }
         } catch (err) {

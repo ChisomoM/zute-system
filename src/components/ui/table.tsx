@@ -167,9 +167,9 @@ export {
   TableCaption,
 };
 
-export interface Table<T extends BaseEntity> {
+export interface Table<T = any> {
   items: T[];
-  onSelect: (action: Action, selected: T, index: number) => void;
+  onSelect: (action: any, selected: T, index: number) => void;
   onCustomAction?: (
     action: string,
     selected: T,
