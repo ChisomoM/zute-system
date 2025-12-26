@@ -30,6 +30,8 @@ import { exportApplicationToPDF } from '@/lib/pdfExport';
 import { FileText, Search, MoreVertical, Eye, CheckCircle, XCircle, Clock, Loader2, Download } from 'lucide-react';
 import { toast } from 'sonner';
 import dayjs from 'dayjs';
+import { signUpWithFirebase } from '@/lib/auth/firebaseAuth';
+import { sendLoginCredentials } from '@/lib/email';
 
 interface ApplicationWithId extends JoinZuteFormData {
   id: string;
@@ -122,6 +124,19 @@ export default function JoinApplications() {
           
           // Store in 'users' collection
           const userId = await FirebaseFirestore.addDocument('users', userData);
+
+          // 2.5. Create Firebase Auth Account
+          const generatedPassword = Math.random().toString(36).slice(-12) + 'A1!'; // Generate secure password
+          await signUpWithFirebase(app.email, generatedPassword, app.fullName);
+
+          // 2.6. Send Login Credentials Email
+          try {
+            await sendLoginCredentials(app.email, app.fullName, generatedPassword);
+            toast.success('Login credentials sent to user email');
+          } catch (emailError) {
+            console.error('Failed to send email:', emailError);
+            toast.warning('User approved but email failed - credentials: ' + generatedPassword);
+          }
 
           // 3. Handle Referral
           if (app.referralCode) {

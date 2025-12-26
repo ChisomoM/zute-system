@@ -18,7 +18,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Search, Loader2, GraduationCap, MapPin, Filter } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Search, Loader2, GraduationCap, MapPin, Filter, Eye, MoreVertical } from 'lucide-react';
 import { FirebaseFirestore } from '@/lib/firebase/firestore';
 import { useAuth } from '@/lib/context/useAuth';
 import { hasPermission, PERMISSIONS } from '@/lib/permissions';
@@ -34,6 +47,9 @@ interface Teacher {
   status: string;
   myReferralCode?: string;
   createdAt: unknown;
+  nrcFront?: string;
+  nrcBack?: string;
+  applicantSignature?: string;
 }
 
 export default function TeacherManagement() {
@@ -44,6 +60,8 @@ export default function TeacherManagement() {
   const [searchQuery, setSearchQuery] = useState('');
   const [districtFilter, setDistrictFilter] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const canViewAll = hasPermission(user, PERMISSIONS.VIEW_ALL_MEMBERS);
   const canViewRegion = hasPermission(user, PERMISSIONS.VIEW_REGION_MEMBERS);
@@ -134,6 +152,11 @@ export default function TeacherManagement() {
     } catch {
       return 'N/A';
     }
+  };
+
+  const viewTeacher = (teacher: Teacher) => {
+    setSelectedTeacher(teacher);
+    setIsDialogOpen(true);
   };
 
   const uniqueDistricts = Array.from(new Set(teachers.map(t => t.district).filter(Boolean)));
@@ -270,6 +293,7 @@ export default function TeacherManagement() {
                   <TableHead className="text-white font-semibold py-3 px-4">Referral Code</TableHead>
                   <TableHead className="text-white font-semibold py-3 px-4">Joined</TableHead>
                   <TableHead className="text-white font-semibold py-3 px-4">Status</TableHead>
+                  <TableHead className="text-white font-semibold py-3 px-4 text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -303,6 +327,21 @@ export default function TeacherManagement() {
                         {teacher.status}
                       </Badge>
                     </TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="h-8 w-8 p-0">
+                            <MoreVertical className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="bg-white">
+                          <DropdownMenuItem onClick={() => viewTeacher(teacher)}>
+                            <Eye className="h-4 w-4 mr-2" />
+                            View Details
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -310,6 +349,128 @@ export default function TeacherManagement() {
           )}
         </CardContent>
       </Card>
+
+      {/* Teacher Details Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-white">
+          <DialogHeader>
+            <DialogTitle>Teacher Details</DialogTitle>
+            <DialogDescription>
+              Full details of the teacher member
+            </DialogDescription>
+          </DialogHeader>
+          {selectedTeacher && (
+            <div className="space-y-6">
+              {/* Status and Date */}
+              <div className="flex items-center justify-between">
+                <Badge
+                  variant={selectedTeacher.status === 'active' ? 'default' : 'secondary'}
+                >
+                  {selectedTeacher.status}
+                </Badge>
+                <span className="text-sm text-gray-500">
+                  Joined: {formatDate(selectedTeacher.createdAt)}
+                </span>
+              </div>
+
+              {/* Personal Information */}
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Personal Information</h3>
+                <div className="grid grid-cols-1 gap-4 text-sm">
+                  <div>
+                    <p className="text-gray-600">Full Name</p>
+                    <p className="font-medium">{selectedTeacher.fullName}</p>
+                  </div>
+                  {selectedTeacher.email && (
+                    <div>
+                      <p className="text-gray-600">Email</p>
+                      <p className="font-medium">{selectedTeacher.email}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* School Information */}
+              <div>
+                <h3 className="font-semibold text-lg mb-3">School Information</h3>
+                <div className="grid grid-cols-1 gap-4 text-sm">
+                  {selectedTeacher.school && (
+                    <div>
+                      <p className="text-gray-600">School</p>
+                      <p className="font-medium">{selectedTeacher.school}</p>
+                    </div>
+                  )}
+                  {selectedTeacher.district && (
+                    <div>
+                      <p className="text-gray-600">District</p>
+                      <p className="font-medium">{selectedTeacher.district}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Referral Information */}
+              {selectedTeacher.myReferralCode && (
+                <div>
+                  <h3 className="font-semibold text-lg mb-3">Referral Information</h3>
+                  <div className="text-sm">
+                    <p className="text-gray-600">Referral Code</p>
+                    <p className="font-medium text-primary-blue font-mono">
+                      {selectedTeacher.myReferralCode}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Documents */}
+              <div>
+                <h3 className="font-semibold text-lg mb-3">Documents</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {selectedTeacher.nrcFront && (
+                    <div>
+                      <p className="text-gray-600 text-sm mb-2">NRC Front</p>
+                      <a
+                        href={selectedTeacher.nrcFront}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-blue-600 underline text-sm"
+                      >
+                        View Document
+                      </a>
+                    </div>
+                  )}
+                  {selectedTeacher.nrcBack && (
+                    <div>
+                      <p className="text-gray-600 text-sm mb-2">NRC Back</p>
+                      <a
+                        href={selectedTeacher.nrcBack}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-blue-600 underline text-sm"
+                      >
+                        View Document
+                      </a>
+                    </div>
+                  )}
+                  {selectedTeacher.applicantSignature && (
+                    <div>
+                      <p className="text-gray-600 text-sm mb-2">Signature</p>
+                      <a
+                        href={selectedTeacher.applicantSignature}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-blue-600 underline text-sm"
+                      >
+                        View Signature
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

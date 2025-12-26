@@ -42,6 +42,7 @@ export default function JoinZuteForm() {
       nrcFront: '',
       nrcBack: '',
       contactNumber: '',
+      email: '',
       reasonForJoining: '',
       applicantSignature: '',
       status: 'pending',
@@ -98,8 +99,13 @@ export default function JoinZuteForm() {
         createdAt: new Date(),
       };
 
+      // Remove undefined fields to avoid Firebase errors
+      const cleanedFormData = Object.fromEntries(
+        Object.entries(formData).filter(([, value]) => value !== undefined)
+      );
+
       const saveWithTimeout = Promise.race([
-        FirebaseFirestore.addDocument('join_requests', formData),
+        FirebaseFirestore.addDocument('join_requests', cleanedFormData),
         new Promise<never>((_, reject) => 
           setTimeout(() => reject(new Error('Save timeout - please try again')), 30000)
         )
@@ -112,7 +118,7 @@ export default function JoinZuteForm() {
       clearSignature();
     } catch (error) {
       console.error('Error submitting form:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Failed to submit application. Please try again.';
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit application. Please try again!';
       toast.error(errorMessage);
     } finally {
       setIsSubmitting(false);
@@ -251,6 +257,19 @@ export default function JoinZuteForm() {
                     <FormLabel className="text-sm font-medium text-gray-700">Contact Number</FormLabel>
                     <FormControl>
                       <Input placeholder="e.g., +260 97 1234567" {...field} className="h-11" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium text-gray-700">Email Address</FormLabel>
+                    <FormControl>
+                      <Input type="email" placeholder="e.g., john.doe@example.com" {...field} className="h-11" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -15,6 +15,7 @@ export interface JoinZuteFormData {
   nrcFront?: string; // URL to uploaded image
   nrcBack?: string; // URL to uploaded image
   contactNumber: string;
+  email: string;
   referralCode?: string; // Optional referral code
   reasonForJoining: string;
   applicantSignature: string; // Base64 or URL
