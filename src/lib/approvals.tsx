@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FirebaseFirestore } from './firebase/firestore';
 import type { ApprovalRequest, ApprovalHistoryItem } from '@/types/admin';
 import type { AuthUser } from '@/types/auth';

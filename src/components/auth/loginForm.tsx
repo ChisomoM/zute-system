@@ -48,8 +48,12 @@ export const LoginForm: React.FC<LoginFormProps> = () => {
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="bg-white rounded-2xl shadow-xl p-6 space-y-4 border border-gray-100">
-        <div className="space-y-1">
-          {/* Logo removed */}
+        <div className="flex justify-center mb-6">
+          <img 
+            src="/logos/ZUTE-Logo.png" 
+            alt="Zute Logo" 
+            className="h-32 w-auto object-contain" 
+          />
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

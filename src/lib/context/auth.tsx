@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 // import { post } from '../api/crud';
 import { signInWithFirebase } from '../auth/firebaseAuth';
-import type { AdminProfile } from '@/types/admin';
 import { FirebaseFirestore } from '../firebase/firestore';
 import type {
   AuthUser,
@@ -17,9 +16,11 @@ import type {
   AuthContextValue,
 } from '@/types/auth';
 import { STORAGE_KEYS } from '../../types/auth';
+import type { AdminProfile } from '../../types/admin';
 import { AuthContext } from './AuthContext';
 import { ROLE_PERMISSIONS } from '../permissions';
 import { type UserRole, USER_ROLES } from '../constants';
+import { generateReferralCode } from '../utils';
 
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -27,6 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [tokens, setTokens] = useState<AuthTokens | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [forceChangePassword] = useState(false);
   const navigate = useNavigate();
 
   const clearStorage = useCallback(() => {
@@ -125,11 +127,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             assignedRegions = adminDoc.assignedRegions || [];
           } else {
             // Check 'users' collection (for teachers)
-            const userDoc = await FirebaseFirestore.getDocument('users', firebaseUser.uid);
+            const userDoc = await FirebaseFirestore.getDocument('users', firebaseUser.uid) as any;
             if (userDoc) {
               userProfile = userDoc;
-              role = ((userDoc as any).role as UserRole) || USER_ROLES.TEACHER;
-              permissions = (userDoc as any).permissions || ROLE_PERMISSIONS[role] || [];
+              role = (userDoc.role as UserRole) || USER_ROLES.TEACHER;
+              permissions = userDoc.permissions || ROLE_PERMISSIONS[role] || [];
+
+              // Generate referral code for teachers who don't have one
+              if (role === USER_ROLES.TEACHER && !userProfile.myReferralCode) {
+                const newReferralCode = generateReferralCode();
+                await FirebaseFirestore.updateDocument('users', firebaseUser.uid, { myReferralCode: newReferralCode });
+                userProfile.myReferralCode = newReferralCode;
+              }
             }
           }
         } catch (err) {
@@ -207,6 +216,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [clearStorage, navigate]);
 
+  const changePassword = useCallback(async (newPassword: string) => {
+    // TODO: Implement password change logic
+    console.log('Change password not implemented yet', newPassword);
+  }, []);
 
   useEffect(() => {
     restoreSessionFromStorage();
@@ -221,10 +234,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     isLoading,
     isAuthenticated: !!user && !!tokens,
     error,
+    forceChangePassword,
 
     // Methods
     login,
     logout,
+    changePassword,
     setUser,
     setTokens,
     clearError: () => setError(null),

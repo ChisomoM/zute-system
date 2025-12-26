@@ -27,6 +27,7 @@ import {
 import { FirebaseFirestore } from '@/lib/firebase/firestore';
 import { type JoinZuteFormData } from '@/types/join-zute';
 import { exportApplicationToPDF } from '@/lib/pdfExport';
+import { generateReferralCode } from '@/lib/utils';
 import { FileText, Search, MoreVertical, Eye, CheckCircle, XCircle, Clock, Loader2, Download } from 'lucide-react';
 import { toast } from 'sonner';
 import dayjs from 'dayjs';
@@ -95,15 +96,6 @@ export default function JoinApplications() {
     filterApplications();
   }, [filterApplications]);
 
-  const generateReferralCode = () => {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let code = '';
-    for (let i = 0; i < 6; i++) {
-      code += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return code;
-  };
-
   const updateApplicationStatus = async (id: string, status: 'approved' | 'rejected') => {
     try {
       if (status === 'approved') {
@@ -119,6 +111,7 @@ export default function JoinApplications() {
             role: 'teacher',
             isActive: true,
             status: 'active',
+            isDefaultPassword: true,
             createdAt: new Date(),
           };
           
@@ -126,7 +119,7 @@ export default function JoinApplications() {
           const userId = await FirebaseFirestore.addDocument('users', userData);
 
           // 2.5. Create Firebase Auth Account
-          const generatedPassword = Math.random().toString(36).slice(-12) + 'A1!'; // Generate secure password
+          const generatedPassword = Math.random().toString(36).substring(2, 7) + Math.floor(Math.random() * 10); // 5 letters + 1 number
           await signUpWithFirebase(app.email, generatedPassword, app.fullName);
 
           // 2.6. Send Login Credentials Email

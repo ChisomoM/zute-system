@@ -7,6 +7,7 @@ import {
   getDocs,
   addDoc,
   updateDoc,
+  setDoc,
   deleteDoc,
   query,
   where,
@@ -42,6 +43,12 @@ export class FirebaseFirestore {
   static async updateDocument(collectionName: string, docId: string, data: Partial<DocumentData>) {
     const docRef = doc(db, collectionName, docId);
     await updateDoc(docRef, data);
+  }
+
+  // Set a document (creates if doesn't exist, updates if exists)
+  static async setDocument(collectionName: string, docId: string, data: DocumentData) {
+    const docRef = doc(db, collectionName, docId);
+    await setDoc(docRef, data);
   }
 
   // Delete a document

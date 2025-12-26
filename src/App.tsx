@@ -8,12 +8,14 @@ import { Toaster } from 'sonner';
 import Login from './components/Login';
 import JoinPage from './(public)/join/JoinPage';
 import { ProtectedRoute } from './lib/ProtectedRoute';
+import { ChangePasswordModal } from './components/auth/ChangePasswordModal';
 import AdminLayout from './layouts/AdminLayout';
 import { AdminDashboard } from './(admin)/admin/Admin';
 import JoinApplications from './(admin)/admin/JoinApplications';
 import TeamManagement from './(admin)/admin/TeamManagement';
 import TeacherManagement from './(admin)/admin/TeacherManagement';
 import Referrals from './(admin)/admin/Referrals';
+import FinancialsPage from './(admin)/admin/FinancialsPage';
 import { ReportsPage } from './(admin)/admin/Reports';
 import ApprovalsPage from './(admin)/admin/ApprovalsPage';
 import RegionManagement from './(admin)/admin/RegionManagement';
@@ -28,6 +30,7 @@ function App() {
   return (
     <>
     <ScrollToTop/>
+    <ChangePasswordModal />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<AboutPage />} />
@@ -61,6 +64,7 @@ function App() {
         <Route path="regions" element={<RegionManagement />} />
         <Route path="team-management" element={<TeamManagement />} />
         <Route path="teacher-management" element={<TeacherManagement />} />
+        <Route path="financials" element={<FinancialsPage />} />
         <Route path="referrals" element={<Referrals />} />
         <Route path="reports" element={<ReportsPage />} />
       </Route>

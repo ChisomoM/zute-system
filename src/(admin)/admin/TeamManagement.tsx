@@ -34,8 +34,8 @@ import { Plus, Search, Loader2, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 import { FirebaseFirestore } from '@/lib/firebase/firestore';
 import { createUser } from '@/lib/firebase/admin-utils';
-import type { AdminProfile } from '@/types/admin';
 import { USER_ROLES, type UserRole, ZAMBIAN_DISTRICTS, type District } from '@/lib/constants';
+import type { AdminProfile } from '@/types/admin';
 
 export default function TeamManagement() {
   const [users, setUsers] = useState<AdminProfile[]>([]);
@@ -70,10 +70,10 @@ export default function TeamManagement() {
   useEffect(() => {
     fetchUsers();
   }, []);
-
+  //
   const handleCreateUser = async () => {
     if (!formData.email || !formData.password || !formData.firstName || !formData.lastName) {
-      toast.error('Please fill in all required fields');
+      toast.error('Please fill in all the required fields');
       return;
     }
 
@@ -153,7 +153,7 @@ export default function TeamManagement() {
               Add Team Member
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl bg-white max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Add New Team Member</DialogTitle>
               <DialogDescription>
@@ -210,7 +210,7 @@ export default function TeamManagement() {
                   <SelectTrigger>
                     <SelectValue placeholder="Select a role" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white">
+                  <SelectContent>
                     {Object.values(USER_ROLES).filter(r => r !== 'teacher').map((role) => (
                       <SelectItem key={role} value={role}>
                         {role.replace('_', ' ').toUpperCase()}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -226,14 +227,24 @@ export const AdminDashboard = () => {
                 View Members
               </Button>
             )}
+            {hasPermission(user, PERMISSIONS.VIEW_ALL_FINANCIALS) && (
+              <Button
+                variant="outline"
+                className="h-20 flex-col gap-2"
+                onClick={() => navigate('/admin/financials')}
+              >
+                <DollarSign className="h-6 w-6" />
+                View Financials
+              </Button>
+            )}
             {hasPermission(user, PERMISSIONS.APPROVE_PAYOUTS) && (
               <Button
                 variant="outline"
                 className="h-20 flex-col gap-2"
                 onClick={() => navigate('/admin/referrals')}
               >
-                <DollarSign className="h-6 w-6" />
-                Manage Financials
+                <Users className="h-6 w-6" />
+                Manage Referrals
               </Button>
             )}
             {hasPermission(user, PERMISSIONS.MANAGE_USERS) && (

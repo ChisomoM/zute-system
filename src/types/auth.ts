@@ -55,6 +55,7 @@ export interface AuthUser extends Partial<LoginUser> {
   myReferralCode?: string;
   permissions?: string[];
   assignedRegions?: string[]; // For Regional Admin / Operations
+  collection?: 'admins' | 'users';
 }
 
 // API Response structure for the new login
@@ -74,6 +75,7 @@ export interface AuthContextState {
   isLoading: boolean;
   isAuthenticated: boolean;
   error: string | null;
+  forceChangePassword: boolean;
 }
 
 // Auth Context Methods
@@ -81,6 +83,7 @@ export interface AuthContextMethods {
   // Account type is detected from the login response
   login(email: string, password: string): Promise<void>;
   logout(): Promise<void>;
+  changePassword(newPassword: string): Promise<void>;
   setUser(user: AuthUser | null): void;
   setTokens(tokens: AuthTokens | null): void;
   clearError(): void;

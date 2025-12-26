@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/table';
 import { useAuth } from '@/lib/context/useAuth';
 import { FirebaseFirestore } from '@/lib/firebase/firestore';
+import { generateReferralCode } from '@/lib/utils';
 import { Copy, Loader2, DollarSign, Users, CheckCircle, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 import dayjs from 'dayjs';
@@ -28,7 +29,7 @@ interface Referral {
 }
 
 export default function AffiliatesPage() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -84,6 +85,54 @@ export default function AffiliatesPage() {
   useEffect(() => {
     fetchReferrals();
   }, [fetchReferrals]);
+
+  // Generate referral code if missing
+  useEffect(() => {
+    const generateReferralCodeIfMissing = async () => {
+      if (user?.id && user?.role === 'teacher' && !user?.myReferralCode) {
+        try {
+          const newReferralCode = generateReferralCode();
+          
+          // Check if user document exists
+          const existingDoc = await FirebaseFirestore.getDocument('users', String(user.id));
+          
+          if (existingDoc) {
+            // Update existing document
+            await FirebaseFirestore.updateDocument('users', String(user.id), { myReferralCode: newReferralCode });
+          } else {
+            // Create new document with basic user info
+            const userData = {
+              id: user.id,
+              email: user.email,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              role: user.role,
+              myReferralCode: newReferralCode,
+              isActive: true,
+              status: 'active',
+              createdAt: new Date(),
+            };
+            await FirebaseFirestore.setDocument('users', String(user.id), userData);
+          }
+          
+          // Update the user context
+          setUser({
+            ...user,
+            myReferralCode: newReferralCode,
+          });
+          
+          toast.success('Referral code generated successfully!');
+        } catch (error) {
+          console.error('Error generating referral code:', error);
+          toast.error('Failed to generate referral code');
+        }
+      }
+    };
+
+    if (user?.id && user?.role === 'teacher' && !user?.myReferralCode) {
+      generateReferralCodeIfMissing();
+    }
+  }, [user?.id, user?.role, user?.myReferralCode, setUser]);
 
   const copyReferralCode = () => {
     if (user?.myReferralCode) {

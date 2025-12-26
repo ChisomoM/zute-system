@@ -129,20 +129,39 @@ export default function AdminLayout() {
                     </SidebarMenuItem>
                   )}
 
-                  {/* Financials / Referrals */}
-                  {(hasPermission(user, PERMISSIONS.VIEW_ALL_FINANCIALS) || hasPermission(user, PERMISSIONS.APPROVE_PAYOUTS)) && (
+                  {/* Financials */}
+                  {hasPermission(user, PERMISSIONS.VIEW_ALL_FINANCIALS) && (
                     <SidebarMenuItem>
-                      <SidebarMenuButton 
-                        asChild 
-                        isActive={isActive('/admin/referrals')}
+                      <SidebarMenuButton
+                        asChild
+                        isActive={isActive('/admin/financials')}
                         className={`text-gray-700 hover:bg-gray-100 data-[active=true]:bg-gradient-to-r data-[active=true]:from-[#D70F0E] data-[active=true]:to-[#E5600B] data-[active=true]:text-white rounded-lg transition-colors ${
                           isCollapsed ? 'justify-center px-2' : ''
                         }`}
                         title={isCollapsed ? 'Financials' : ''}
                       >
-                        <Link to="/admin/referrals" className="flex items-center gap-3">
+                        <Link to="/admin/financials" className="flex items-center gap-3">
                           <DollarSign className="h-5 w-5 flex-shrink-0" />
                           {!isCollapsed && <span>Financials</span>}
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )}
+
+                  {/* Referrals */}
+                  {hasPermission(user, PERMISSIONS.APPROVE_PAYOUTS) && (
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={isActive('/admin/referrals')}
+                        className={`text-gray-700 hover:bg-gray-100 data-[active=true]:bg-gradient-to-r data-[active=true]:from-[#D70F0E] data-[active=true]:to-[#E5600B] data-[active=true]:text-white rounded-lg transition-colors ${
+                          isCollapsed ? 'justify-center px-2' : ''
+                        }`}
+                        title={isCollapsed ? 'Referrals' : ''}
+                      >
+                        <Link to="/admin/referrals" className="flex items-center gap-3">
+                          <Users className="h-5 w-5 flex-shrink-0" />
+                          {!isCollapsed && <span>Referrals</span>}
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
